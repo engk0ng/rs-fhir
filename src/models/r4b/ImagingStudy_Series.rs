@@ -268,6 +268,20 @@ impl ImagingStudy_Series<'_> {
         return None;
     }
 
+    pub fn sop_class(&self) -> Coding {
+        Coding {
+            value: Cow::Borrowed(&self.value["sopClass"]),
+        }
+    }
+
+    /// The description of the instance.
+    pub fn title(&self) -> Option<&str> {
+        if let Some(Value::String(string)) = self.value.get("title") {
+            return Some(string);
+        }
+        return None;
+    }
+
     pub fn validate(&self) -> bool {
         if let Some(_val) = self._description() {
             if !_val.validate() {
@@ -399,6 +413,16 @@ impl ImagingStudy_SeriesBuilder {
         return self;
     }
 
+    pub fn _title<'a>(&'a mut self, val: Element) -> &'a mut ImagingStudy_SeriesBuilder {
+        self.value["_title"] = json!(val.value);
+        return self;
+    }
+
+    pub fn _sop_class<'a>(&'a mut self, val: Coding) -> &'a mut ImagingStudy_SeriesBuilder {
+        self.value["_sopClass"] = json!(val.value);
+        return self;
+    }
+
     pub fn body_site<'a>(&'a mut self, val: Coding) -> &'a mut ImagingStudy_SeriesBuilder {
         self.value["bodySite"] = json!(val.value);
         return self;
@@ -476,6 +500,16 @@ impl ImagingStudy_SeriesBuilder {
 
     pub fn uid<'a>(&'a mut self, val: &str) -> &'a mut ImagingStudy_SeriesBuilder {
         self.value["uid"] = json!(val);
+        return self;
+    }
+
+    pub fn sop_class<'a>(&'a mut self, val: Coding) -> &'a mut ImagingStudy_SeriesBuilder {
+        self.value["sopClass"] = json!(val.value);
+        return self;
+    }
+
+    pub fn title<'a>(&'a mut self, val: &str) -> &'a mut ImagingStudy_SeriesBuilder {
+        self.value["title"] = json!(val);
         return self;
     }
 }
